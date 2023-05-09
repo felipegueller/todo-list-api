@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id').primary().notNullable()
     table.string('title', 255).notNullable()
     table.text('description', 'mediumtext').notNullable()
+    table.datetime('conclusion_date').nullable()
     table.boolean('done').defaultTo(false)
     table.integer('list_id').unsigned().notNullable()
 

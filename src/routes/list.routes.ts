@@ -1,12 +1,21 @@
 import { Router } from "express";
 
+import {
+  index,
+  find,
+  create,
+  update,
+  remove
+}
+from '../controllers/list.controller'
+
 const listRouter = Router()
 
-listRouter.get('/')
-listRouter.post('/')
-listRouter.get('/:id')
-listRouter.put('/:id')
-listRouter.delete('/:id')
+listRouter.get('/', index)
+listRouter.post('/', create)
+listRouter.get('/:id', find)
+listRouter.put('/:id', update)
+listRouter.delete('/:id', remove)
 
 export {
   listRouter

@@ -38,13 +38,25 @@ export class TaskModel {
   }
 
   async update(id: number, task: Task): Promise<number> {
-    return await db('tasks').update({
-      ...task,
-      updated_at: db.fn.now()
-    }).where({ id })
+    return await db('tasks')
+      .update({
+        ...task,
+        updated_at: db.fn.now()
+      })
+      .where({ id })
   }
 
   async remove(id: number) {
     return await db('tasks').where({ id }).del()
+  }
+
+  async markTask(id: number, done: boolean, conclusion_date: string) {
+    return await db('tasks')
+      .update({
+        done,
+        conclusion_date,
+        updated_at: db.fn.now()
+      })
+      .where({ id })
   }
 }

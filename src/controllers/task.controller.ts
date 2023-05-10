@@ -125,4 +125,40 @@ const remove = async (req: Request, res: Response) => {
   }
 }
 
-export { index, find, create, update, remove }
+const mark = async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const { done } = req.body
+
+  if (!done) {
+    return res.status(404).json({
+      message: 'you need to send done attribute'
+    })
+  }
+
+  try {
+    const task: Task[] = await taskModel.getOne(id)
+
+    if (!task.length) {
+      return res.status(404).json({
+        message: 'task not found'
+      })
+    }
+
+    const conclusionDate: string = task[0]?.conclusion_date
+      ? task[0]?.conclusion_date
+      : new Date().toISOString().split('T')[0]
+
+    await taskModel.markTask(id, done, conclusionDate)
+
+    return res.json({
+      id: id,
+      message: 'task marked'
+    })
+  } catch (error: any) {
+    res.status(500).json({
+      message: error['message']
+    })
+  }
+}
+
+export { index, find, create, update, remove, mark }

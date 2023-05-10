@@ -5,13 +5,13 @@ import { TaskList } from '../interfaces/task-list.interface'
 
 export class TaskListModel {
   async getAll() {
-    return await db.select('id', 'name').from('task-list').orderBy('id')
+    return await db.select('id', 'name').from('task_list').orderBy('id')
   }
   async getOne(id: number) {
     return await db.transaction(async (trx: Knex) => {
       const list: TaskList[] = await trx
         .select('id', 'name')
-        .from('task-list')
+        .from('task_list')
         .where({ id })
 
       if (!list.length) throw new Error('list not found')
@@ -29,15 +29,17 @@ export class TaskListModel {
   }
 
   async getListByName(name: string): Promise<TaskList[]> {
-    return await db('task-list').where({ name })
+    return await db('task_list').where({ name })
   }
 
   async insert(name: string) {
-    return db('task-list').insert({ name })
+    return db('task_list').insert({ name })
   }
 
   async update(id: number, name: string): Promise<number> {
-    return await db('task-list').update({ name }).where({ id })
+    return await db('task_list')
+      .update({ name, updated_at: db.fn.now() })
+      .where({ id })
   }
 
   async remove(id: number) {

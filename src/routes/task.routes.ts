@@ -5,6 +5,7 @@ import {
   find,
   create,
   update,
+  mark,
   remove
 }
 from '../controllers/task.controller'
@@ -15,6 +16,7 @@ taskRouter.get('/', index)
 taskRouter.post('/', create)
 taskRouter.get('/:id', find)
 taskRouter.put('/:id', update)
+taskRouter.patch('/:id', mark)
 taskRouter.delete('/:id', remove)
 
 export {

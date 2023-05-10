@@ -7,7 +7,7 @@ import {
   update,
   remove
 }
-from '../controllers/taks.controller'
+from '../controllers/task.controller'
 
 const taskRouter = Router()
 

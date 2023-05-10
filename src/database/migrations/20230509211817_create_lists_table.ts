@@ -1,10 +1,10 @@
 import { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  const hasTable = await knex.schema.hasTable('lists')
+  const hasTable = await knex.schema.hasTable('task-list')
   if (hasTable) return
 
-  return knex.schema.createTable('lists', table => {
+  return knex.schema.createTable('task-list', table => {
     table.increments('id').primary().notNullable()
     table.string('name', 255).unique().notNullable()
 
@@ -14,5 +14,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTableIfExists('lists')
+  return knex.schema.dropTableIfExists('task-list')
 }

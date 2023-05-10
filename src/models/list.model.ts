@@ -5,13 +5,13 @@ import { List } from './../interfaces/list.interface'
 
 export class ListModel {
   async getAll() {
-    return await db.select('id', 'name').from('lists').orderBy('id')
+    return await db.select('id', 'name').from('task-list').orderBy('id')
   }
   async getOne(id: number) {
     return await db.transaction(async (trx: Knex) => {
       const list: List[] = await trx
         .select('id', 'name')
-        .from('lists')
+        .from('task-list')
         .where({ id })
 
       if (!list.length) throw new Error('list not found')
@@ -29,18 +29,18 @@ export class ListModel {
   }
 
   async getListByName(name: string): Promise<List[]> {
-    return await db('lists').where({ name })
+    return await db('task-list').where({ name })
   }
 
   async insert(name: string) {
-    return db('lists').insert({ name })
+    return db('task-list').insert({ name })
   }
 
   async update(id: number, name: string): Promise<number> {
-    return await db('lists').update({ name }).where({ id })
+    return await db('task-list').update({ name }).where({ id })
   }
-  
+
   async remove(id: number) {
-    return await db('lists').where({ id }).del()
+    return await db('task-list').where({ id }).del()
   }
 }

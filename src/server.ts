@@ -11,6 +11,6 @@ const serverPort = process.env.API_PORT
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
-app.use('/lists', listRouter)
+app.use('/task-list', listRouter)
 
 app.listen(serverPort, () => console.log(`The server is running on port ${serverPort}.`))

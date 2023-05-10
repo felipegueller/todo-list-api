@@ -7,7 +7,7 @@ import {
   update,
   remove
 }
-from '../controllers/list.controller'
+from '../controllers/task-list.controller'
 
 const listRouter = Router()
 

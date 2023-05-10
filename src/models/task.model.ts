@@ -1,5 +1,6 @@
-import { Knex } from 'knex'
 import { db } from '../database/database'
+
+import { Task } from '../interfaces/task.interface'
 
 export class TaskModel {
   async getAll() {
@@ -16,11 +17,34 @@ export class TaskModel {
       .orderBy('id')
   }
 
-  async getOne(id: number) {}
+  async getOne(id: number) {
+    return await db
+      .select(
+        'id',
+        'title',
+        'description',
+        'conclusion_date',
+        'done',
+        'list_id'
+      )
+      .from('tasks')
+      .where({ id })
+  }
 
-  async insert(name: string) {}
+  async insert(task: Task): Promise<number> {
+    const data = await db('tasks').insert(task)
 
-  async update(id: number, name: string) {}
+    return data[0]
+  }
 
-  async remove(id: number) {}
+  async update(id: number, task: Task): Promise<number> {
+    return await db('tasks').update({
+      ...task,
+      updated_at: db.fn.now()
+    }).where({ id })
+  }
+
+  async remove(id: number) {
+    return await db('tasks').where({ id }).del()
+  }
 }

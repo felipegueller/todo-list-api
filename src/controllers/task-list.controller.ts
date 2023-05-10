@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 
-import { List } from '../interfaces/list.interface'
+import { TaskList } from '../interfaces/task-list.interface'
 
-import { ListModel } from '../models/list.model'
+import { TaskListModel } from '../models/task-list.model'
 
-const listModel = new ListModel()
+const listModel = new TaskListModel()
 
 const index = async (req: Request, res: Response) => {
   try {
@@ -21,7 +21,7 @@ const find = async (req: Request, res: Response) => {
   const id: number = Number(req.params.id)
 
   try {
-    const data: List = await listModel.getOne(id)
+    const data: TaskList = await listModel.getOne(id)
 
     res.json({ data })
   } catch (error: any) {
@@ -41,7 +41,7 @@ const create = async (req: Request, res: Response) => {
   }
 
   try {
-    const findList: List[] = await listModel.getListByName(name)
+    const findList: TaskList[] = await listModel.getListByName(name)
 
     if (findList.length) {
       return res.status(400).json({
@@ -73,7 +73,7 @@ const update = async (req: Request, res: Response) => {
   }
 
   try {
-    const findList: List[] = await listModel.getListByName(name)
+    const findList:  TaskList[] = await listModel.getListByName(name)
     const alredyExistsListName = findList.length && findList[0].id !== id
 
     if (alredyExistsListName) {
@@ -104,7 +104,7 @@ const remove = async (req: Request, res: Response) => {
   const id: number = Number(req.params.id)
 
   try {
-    const list: List = await listModel.getOne(id)
+    const list: TaskList = await listModel.getOne(id)
 
     if (list.tasks?.length) {
       return res.status(400).json({

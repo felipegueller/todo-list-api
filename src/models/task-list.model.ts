@@ -1,15 +1,15 @@
 import { Knex } from 'knex'
 import { db } from '../database/database'
 
-import { List } from './../interfaces/list.interface'
+import { TaskList } from '../interfaces/task-list.interface'
 
-export class ListModel {
+export class TaskListModel {
   async getAll() {
     return await db.select('id', 'name').from('task-list').orderBy('id')
   }
   async getOne(id: number) {
     return await db.transaction(async (trx: Knex) => {
-      const list: List[] = await trx
+      const list: TaskList[] = await trx
         .select('id', 'name')
         .from('task-list')
         .where({ id })
@@ -28,7 +28,7 @@ export class ListModel {
     })
   }
 
-  async getListByName(name: string): Promise<List[]> {
+  async getListByName(name: string): Promise<TaskList[]> {
     return await db('task-list').where({ name })
   }
 

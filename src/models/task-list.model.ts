@@ -43,6 +43,6 @@ export class TaskListModel {
   }
 
   async remove(id: number) {
-    return await db('task-list').where({ id }).del()
+    return await db('task_list').where({ id }).del()
   }
 }
